@@ -4,7 +4,13 @@ imagemin = require('gulp-imagemin'),
 stylus = require('gulp-stylus'),
 nib = require('nib'),
 uglify = require('gulp-uglify');
+htmlMin = require('gulp-htmlmin');
 
+gulp.task('html', function(){
+  gulp.src('src/*.html')
+    .pipe(htmlMin({collapseWhitespace: true}))
+    .pipe(gulp.dest('dist'))
+});
 
 gulp.task('js', function(){
   gulp.src(['src/js/**/*.js', '!src/js/vendor/*.js'])
@@ -40,7 +46,7 @@ gulp.task('mirarCSS', function(){
 
 
 gulp.task('copiar', function(){
-	gulp.src(['src/**/*', '!src/js/**/*', '!src/css/**/*', '!src/img/**/*'])
+	gulp.src(['src/**/*', '!src/**/*.html', '!src/js/**/*', '!src/css/**/*', '!src/img/**/*'])
 		.pipe(gulp.dest('dist'));
 
 	gulp.src(['src/js/vendor/**/*'])
@@ -59,4 +65,4 @@ gulp.task('iniciar', function(){
   gulp.watch(['src/css/*.styl', '!src/css/vendor/*.css'], ['mirarCSS']);
 });
 
-gulp.task('build', ['copiar', 'js', 'img', 'css']);
+gulp.task('build', ['copiar', 'html', 'js', 'img', 'css']);
