@@ -1,2 +1,2 @@
 angular
-	.module("nombreapp",["ngRoute"]);
+	.module("nombreApp",["ngRoute"]);

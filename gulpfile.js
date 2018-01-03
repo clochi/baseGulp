@@ -3,8 +3,9 @@ var gulp = require('gulp'),
 imagemin = require('gulp-imagemin'),
 stylus = require('gulp-stylus'),
 nib = require('nib'),
-uglify = require('gulp-uglify');
-htmlMin = require('gulp-htmlmin');
+uglify = require('gulp-uglify'),
+htmlMin = require('gulp-htmlmin'),
+babel = require('gulp-babel');
 
 gulp.task('html', function(){
   gulp.src('src/**/*.html')
@@ -21,6 +22,9 @@ gulp.task('html', function(){
 gulp.task('js', function(){
   gulp.src(['src/js/**/*.js', '!src/js/vendor/*.js'])
     //.pipe(concat('bundle.js'))
+    .pipe(babel({
+      presets: ['env']
+    }))
     .pipe(uglify(/*{mangle: false}*/))
     .pipe(gulp.dest('dist/js'));
 });
@@ -77,4 +81,3 @@ gulp.task('iniciar', function(){
 });
 
 gulp.task('build', ['copiar', 'html', 'js', 'img', 'css'/*, 'componentsHtml', 'componentsJs'*/]);
-
